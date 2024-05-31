@@ -29,6 +29,10 @@ config :elixir_most_wanted, ElixirMostWantedWeb.Endpoint,
     tailwind: {Tailwind, :install_and_run, [:elixir_most_wanted, ~w(--watch)]}
   ]
 
+# Configure github oauth
+config :elixir_most_wanted, :github,
+  client_id: System.get_env("GITHUB_CLIENT_ID"),
+  client_secret: System.get_env("GITHUB_CLIENT_SECRET")
 # ## SSL Support
 #
 # In order to use HTTPS in development, a self-signed
