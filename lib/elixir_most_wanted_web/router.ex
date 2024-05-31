@@ -1,6 +1,8 @@
 defmodule ElixirMostWantedWeb.Router do
   use ElixirMostWantedWeb, :router
 
+  import ElixirMostWantedWeb.UserAuth
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -8,6 +10,7 @@ defmodule ElixirMostWantedWeb.Router do
     plug :put_root_layout, html: {ElixirMostWantedWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :fetch_current_user
   end
 
   pipeline :api do
@@ -18,6 +21,23 @@ defmodule ElixirMostWantedWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+  end
+
+  scope "/", ElixirMostWantedWeb do
+    pipe_through :browser
+
+    get "/oauth/callbacks/:provider", OAuthCallbackController, :new
+  end
+
+  scope "/", ElixirMostWantedWeb do
+    pipe_through :browser
+
+    delete "/auth/logout", OAuthCallbackController, :sign_out
+
+    live_session :default,
+      on_mount: [{ElixirMostWantedWeb.UserAuth, :current_user}, ElixirMostWantedWeb.Nav] do
+      live "/auth/login", SignInLive, :index
+    end
   end
 
   # Other scopes may use custom stacks.

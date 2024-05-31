@@ -10,7 +10,8 @@ defmodule ElixirMostWanted.Application do
     children = [
       ElixirMostWantedWeb.Telemetry,
       ElixirMostWanted.Repo,
-      {DNSCluster, query: Application.get_env(:elixir_most_wanted, :dns_cluster_query) || :ignore},
+      {DNSCluster,
+       query: Application.get_env(:elixir_most_wanted, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: ElixirMostWanted.PubSub},
       # Start the Finch HTTP client for sending emails
       {Finch, name: ElixirMostWanted.Finch},
