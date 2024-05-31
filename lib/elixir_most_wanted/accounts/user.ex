@@ -8,7 +8,6 @@ defmodule ElixirMostWanted.Accounts.User do
     field :name, :string
     field :token, :string
     field :avatar_url, :string
-    field :external_homepage_url, :string
     field :visibility, Ecto.Enum, values: [public: 1, unlisted: 2]
 
     timestamps()
