@@ -10,7 +10,7 @@ defmodule ElixirMostWanted.Repo.Migrations.InitCore do
       add :avatar_url, :string
       add :visibility, :integer, null: false, default: 1
 
-      timestamps()
+      timestamps(type: :utc_datetime)
     end
 
     create unique_index(:users, [:name])
