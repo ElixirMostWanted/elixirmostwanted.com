@@ -20,7 +20,7 @@ defmodule ElixirMostWantedWeb.Router do
   scope "/", ElixirMostWantedWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    live "/", HomeLive.Index, :index
   end
 
   scope "/", ElixirMostWantedWeb do
