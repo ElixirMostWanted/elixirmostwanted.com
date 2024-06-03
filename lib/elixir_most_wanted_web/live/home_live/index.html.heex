@@ -1,0 +1,18 @@
+<.header>
+  Listing Most Wanteds
+</.header>
+
+<ol phx-update="stream" id="wanteds" class="my-6">
+  <li :for={{id, vote} <- @streams.wanteds} id={id} class="flex justify-between">
+    <div class="py-3 ">
+      <h2 class="w-full font-medium"><%= vote.wanted.name %></h2>
+      <p class="text-zinc-700"><%= vote.wanted.purpose || "Some purpose text here" %></p>
+    </div>
+    <div class="flex flex-col text-center">
+      <span class="text-2xl font-extrabold">
+        <%= vote.count %>
+      </span>
+      votes
+    </div>
+  </li>
+</ol>
