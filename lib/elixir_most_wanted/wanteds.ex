@@ -6,12 +6,12 @@ defmodule ElixirMostWanted.Wanteds do
 
   def list_most_wanted do
     from(w in Wanted,
-      join: v in Vote,
+      left_join: v in Vote,
       on: v.wanted_id == w.id,
       where: is_nil(w.completed_at),
       group_by: [w.id],
-      select: %Vote{wanted: w, count: count(v.wanted_id)},
-      order_by: [desc: :count]
+      select: %{w | vote_count: count(v)},
+      order_by: [desc: count(v)]
     )
     |> Repo.all()
   end
