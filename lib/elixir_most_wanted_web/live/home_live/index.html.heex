@@ -1,18 +1,34 @@
 <.header>
   Listing Most Wanteds
+  <:actions>
+    <.link navigate={~p"/new"}>
+      <.button>New</.button>
+    </.link>
+  </:actions>
 </.header>
 
 <ol phx-update="stream" id="wanteds" class="my-6">
-  <li :for={{id, wanted} <- @streams.wanteds} id={id} class="flex justify-between">
-    <div class="py-3 ">
-      <h2 class="w-full font-medium"><%= wanted.name %></h2>
-      <p class="text-zinc-700"><%= wanted.purpose || "Some purpose text here" %></p>
-    </div>
-    <div class="flex flex-col text-center">
-      <span class="text-2xl font-extrabold">
-        <%= wanted.vote_count %>
-      </span>
-      votes
-    </div>
+  <li :for={{id, wanted} <- @streams.wanteds} id={id}>
+    <.link navigate={~p"/#{wanted}"} class="flex justify-between px-2 hover:bg-zinc-100">
+      <div class="py-3 ">
+        <h2 class="w-full font-medium"><%= wanted.name %></h2>
+        <p class="text-zinc-700"><%= wanted.purpose || "Some purpose text here" %></p>
+      </div>
+      <div class="flex flex-col text-center">
+        <span class="text-2xl font-extrabold">
+          <%= wanted.vote_count %>
+        </span>
+        votes
+      </div>
+    </.link>
   </li>
 </ol>
+
+<.modal :if={@live_action == :new} id="wanted-modal" show on_cancel={JS.patch(~p"/")}>
+  <.live_component
+    module={ElixirMostWantedWeb.WantedLive.FormComponent}
+    id={@wanted.id || :new}
+    title={@page_title}
+    wanted={@wanted}
+  />
+</.modal>
