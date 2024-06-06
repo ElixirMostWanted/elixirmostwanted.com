@@ -40,6 +40,21 @@ defmodule ElixirMostWantedWeb.Router do
     end
   end
 
+  scope "/", ElixirMostWantedWeb do
+    pipe_through [:browser, :require_authenticated_user]
+
+    live_session :require_authenticated_user,
+      on_mount: [{ElixirMostWantedWeb.UserAuth, :ensure_authenticated}] do
+      live "/new", HomeLive.Index, :new
+    end
+  end
+
+  scope "/", ElixirMostWantedWeb do
+    pipe_through :browser
+
+    live "/:slug_id", WantedLive.Show, :show
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", ElixirMostWantedWeb do
   #   pipe_through :api
