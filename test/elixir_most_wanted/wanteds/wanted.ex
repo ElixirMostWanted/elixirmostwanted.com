@@ -65,7 +65,7 @@ defmodule ElixirMostWanted.Wanteds.WantedTest do
         )
 
       vote1 = Repo.insert!(%Vote{wanted_id: wanted.id, user_id: user.id})
-      _vote2 = Repo.insert!(%Vote{wanted_id: wanted.id, user_id: user2.id})
+      Repo.insert!(%Vote{wanted_id: wanted.id, user_id: user2.id})
       vote3 = Repo.insert!(%Vote{wanted_id: wanted2.id, user_id: user.id})
 
       wanted = Repo.get!(Wanted, wanted.id)
